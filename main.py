@@ -39,43 +39,35 @@ def day2():
     paper = 2
     scissors = 3
 
-    for x in input_list:
-        game_round = x.split(" ")
-
-        match game_round[0]:
-            case 'A':
-                match game_round[1]:
-                    case 'X':
-                        part1_score += draw + rock
-                        part2_score += loss + scissors
-                    case 'Y':
-                        part1_score += win + paper
-                        part2_score += draw + rock
-                    case 'Z':
-                        part1_score += loss + scissors
-                        part2_score += win + paper
-            case 'B':
-                match game_round[1]:
-                    case 'X':
-                        part1_score += loss + rock
-                        part2_score += loss + rock
-                    case 'Y':
-                        part1_score += draw + paper
-                        part2_score += draw + paper
-                    case 'Z':
-                        part1_score += win + scissors
-                        part2_score += win + scissors
-            case 'C':
-                match game_round[1]:
-                    case 'X':
-                        part1_score += win + rock
-                        part2_score += loss + paper
-                    case 'Y':
-                        part1_score += loss + paper
-                        part2_score += draw + scissors
-                    case 'Z':
-                        part1_score += draw + scissors
-                        part2_score += win + rock
+    for game_round in input_list:
+        match game_round:
+            case "A X":
+                part1_score += draw + rock
+                part2_score += loss + scissors
+            case "A Y":
+                part1_score += win + paper
+                part2_score += draw + rock
+            case "A Z":
+                part1_score += loss + scissors
+                part2_score += win + paper
+            case "B X":
+                part1_score += loss + rock
+                part2_score += loss + rock
+            case "B Y":
+                part1_score += draw + paper
+                part2_score += draw + paper
+            case "B Z":
+                part1_score += win + scissors
+                part2_score += win + scissors
+            case "C X":
+                part1_score += win + rock
+                part2_score += loss + paper
+            case "C Y":
+                part1_score += loss + paper
+                part2_score += draw + scissors
+            case "C Z":
+                part1_score += draw + scissors
+                part2_score += win + rock
 
     print(part1_score)
     print(part2_score)
