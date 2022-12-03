@@ -1,3 +1,4 @@
+import string
 import time
 
 
@@ -74,13 +75,62 @@ def day2():
 
     #14375
     #10274
-    #Execution time (ms): 0.5366001278162003
+    #Execution time (ms): 0.5049000028520823
+
+
+def intersect(string1, string2):
+    common = []
+    for char in set(string1):
+        common.extend(char * min(string1.count(char), string2.count(char)))
+
+    return common
+
+
+def day3_part1():
+    rucksacks = open("data\\day3.txt").read().split("\n")
+    priority_sum = 0
+
+    for rucksack in rucksacks:
+        l = len(rucksack)
+        item = intersect(rucksack[0:l//2], rucksack[l//2:])
+
+        priority = string.ascii_lowercase.index(item[0].lower()) + 1
+        if item[0].isupper():
+            priority += 26
+
+        priority_sum += priority
+
+    print(priority_sum)
+
+
+def day3_part2():
+    rucksacks = open("data\\day3.txt").read().split("\n")
+    start_index = 0
+    stop_index = 3
+    take = 3
+    priority_sum = 0
+
+    while start_index < len(rucksacks):
+        group = rucksacks[start_index: stop_index]
+        start_index += take
+        stop_index += take
+
+        first_intersect = list(set((intersect(group[0], group[1]))))
+        item = intersect(first_intersect, group[2])[0]
+
+        priority = string.ascii_lowercase.index(item.lower()) + 1
+        if item[0].isupper():
+            priority += 26
+
+        priority_sum += priority
+
+    print(priority_sum)
 
 
 if __name__ == '__main__':
     start = time.perf_counter()
 
-    day2()
+    day3_part2()
 
     elapsed_time = (time.perf_counter() - start) * 1000
     print("Execution time (ms):", elapsed_time)
