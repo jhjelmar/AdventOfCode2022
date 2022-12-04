@@ -1,3 +1,4 @@
+import re
 import string
 import time
 
@@ -92,7 +93,7 @@ def day3_part1():
 
     for rucksack in rucksacks:
         l = len(rucksack)
-        item = intersect(rucksack[0:l//2], rucksack[l//2:])
+        item = list(set(rucksack[0:l // 2]) & set(rucksack[l // 2:]))
 
         priority = string.ascii_lowercase.index(item[0].lower()) + 1
         if item[0].isupper():
@@ -101,6 +102,7 @@ def day3_part1():
         priority_sum += priority
 
     print(priority_sum)
+    #7568
 
 
 def day3_part2():
@@ -115,8 +117,7 @@ def day3_part2():
         start_index += take
         stop_index += take
 
-        first_intersect = list(set((intersect(group[0], group[1]))))
-        item = intersect(first_intersect, group[2])[0]
+        item = list(set(group[0]) & set(group[1]) & set(group[2]))[0]
 
         priority = string.ascii_lowercase.index(item.lower()) + 1
         if item[0].isupper():
@@ -125,12 +126,54 @@ def day3_part2():
         priority_sum += priority
 
     print(priority_sum)
+    #2780
+
+
+def day4_part1():
+    assignment_pairs = open("data\\day4.txt").read().split("\n")
+
+    fully_contained_pair = 0
+
+    for assignment_pair in assignment_pairs:
+        area_boundaries = re.split('\W+', assignment_pair)
+
+        if (
+                (int(area_boundaries[0]) <= int(area_boundaries[2]) and
+                 int(area_boundaries[1]) >= int(area_boundaries[3]))
+                or
+                (int(area_boundaries[2]) <= int(area_boundaries[0]) and
+                 int(area_boundaries[3]) >= int(area_boundaries[1]))):
+            fully_contained_pair += 1
+
+    print(fully_contained_pair)
+    # 494
+
+
+def day4_part2():
+    assignment_pairs = open("data\\day4.txt").read().split("\n")
+    overlapping = 0
+
+    for assignment_pair in assignment_pairs:
+        area_boundaries = re.split('\W+', assignment_pair)
+
+        range1 = range(int(area_boundaries[0]), int(area_boundaries[1]) + 1)
+        range2 = range(int(area_boundaries[2]), int(area_boundaries[3]) + 1)
+
+        overlapping_range = range(max(range1[0], range2[0]), min(range1[-1], range2[-1]) + 1)
+
+        temp = list(overlapping_range)
+        if len(temp) > 0:
+            overlapping += 1
+
+    print(overlapping)
+    # 833
 
 
 if __name__ == '__main__':
     start = time.perf_counter()
 
-    day3_part2()
+    day4_part1()
+    day4_part2()
 
     elapsed_time = (time.perf_counter() - start) * 1000
     print("Execution time (ms):", elapsed_time)
