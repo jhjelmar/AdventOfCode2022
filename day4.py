@@ -1,6 +1,11 @@
 import re
 
 
+def solve():
+    part1()
+    part2()
+
+
 def part1():
     assignment_pairs = open("data\\day4.txt").read().split("\n")
 

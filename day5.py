@@ -1,3 +1,8 @@
+def solve():
+    part1()
+    part2()
+
+
 def cargo_setup():
     stack1 = ['S', 'T', 'H', 'F', 'W', 'R']
     stack2 = ['S', 'G', 'D', 'Q', 'W']

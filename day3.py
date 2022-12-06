@@ -9,6 +9,11 @@ def intersect(string1, string2):
     return common
 
 
+def solve():
+    part1()
+    part2()
+
+
 def part1():
     rucksacks = open("data\\day3.txt").read().split("\n")
     priority_sum = 0
