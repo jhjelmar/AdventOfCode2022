@@ -1,14 +1,12 @@
 def solve():
-    stream = open("data\\day6.txt").read()
-    packet_marker = 4
-    message_marker = 14
+    input_text = open("data\\day6.txt").read()
 
-    for x in range(len(stream)):
-        if len(set(stream[x:x+packet_marker])) == packet_marker:
-            print(x+packet_marker)
-            break
+    find_marker(input_text, 4)
+    find_marker(input_text, 14)
 
-    for x in range(len(stream)):
-        if len(set(stream[x:x + message_marker])) == message_marker:
-            print(x + message_marker)
+
+def find_marker(text, size):
+    for x in range(len(text)):
+        if len(set(text[x:x+size])) == size:
+            print(x+size)
             break

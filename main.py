@@ -1,71 +1,35 @@
 import time
 
 
-class Directory:
-    def __init__(self, name, parent=None):
-        self.name = name
-        self.parent = parent
-        self.size = 0
-        self.subdirectories = []
+def day8():
+    input = open("data\\day8_test.txt").read().split("\n")
+    tree_grid = [[]]
+    for i in input:
+        tree_grid
 
-    def calculate_size(self, total_size):
-        calculated_size = self.size
+    visible = []
 
-        for sub in self.subdirectories:
-            result = sub.calculate_size(total_size)
-            calculated_size += result[0]
-            total_size = result[1]
+    row_no = 0
+    for row in tree_grid:
+        highest_left = -1
+        highest_right = -1
 
-        if calculated_size <= 100000:
-            total_size += calculated_size
+        for t in range(len(row)):
+            if int(row[t]) > highest_left:
+                visible.append(str(row_no) + "," + str(t))
+                highest_left = int(row[t])
 
-        return calculated_size, total_size
+            if int(row[len(row)-t-1]) > highest_right:
+                visible.append(str(row_no) + "," + str(len(row)-t))
+                highest_right = int(row[len(row)-t-1])
 
-    def find_smallest_to_delete(self, space_req, smallest):
-        calculated_size = self.size
-
-        for sub in self.subdirectories:
-            result = sub.find_smallest_to_delete(space_req, smallest)
-            calculated_size += result[0]
-            smallest = result[1]
-
-        if space_req <= calculated_size < smallest:
-            smallest = calculated_size
-
-        return calculated_size, smallest
-
-
-def day7():
-    input_list = open("data\\day7.txt").read().split("\n")
-    root = Directory("root")
-    active = root
-
-    for line in input_list:
-        if line == "$ cd /":
-            active = root
-        elif line == "$ cd ..":
-            active = active.parent
-        elif line.startswith("$ cd "):
-            for sub in active.subdirectories:
-                if sub.name == line[5:]:
-                    active = sub
-                    break
-        elif line[0].isdigit():
-            active.size += int(line[:line.index(" ")])
-        elif line.startswith("dir"):
-            active.subdirectories.append(Directory(line[4:], active))
-
-    result = root.calculate_size(0)
-    space_req = 30000000 - (70000000 - result[0])
-    result2 = root.find_smallest_to_delete(space_req, result[0])
-
-    print(result[1])
-    print(result2[1])
+        print(visible)
+        row_no += 1
 
 
 if __name__ == '__main__':
     start = time.perf_counter()
-    day7()
+    day8()
 
     elapsed_time = (time.perf_counter() - start) * 1000
     print("Execution time (ms):", elapsed_time)
